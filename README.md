@@ -1,54 +1,72 @@
-<header>
+# Game to APK Converter Backend
 
-<!--
-  <<< Author notes: Course header >>>
-  Include a 1280×640 image, course title in sentence case, and a concise description in emphasis.
-  In your repository settings: enable template repository, add your 1280×640 social image, auto delete head branches.
-  Add your open source license, GitHub uses MIT license.
--->
+This directory contains the backend server for the Game to APK Converter application.
 
-# GitHub Pages
+## Overview
 
-_Create a site or blog from your GitHub repositories with GitHub Pages._
+The server handles:
+- File uploads
+- ZIP extraction and validation
+- APK building using Capacitor
+- Serving APK files for download
 
-</header>
+## Running the Server
 
-<!--
-  <<< Author notes: Step 1 >>>
-  Choose 3-5 steps for your course.
-  The first step is always the hardest, so pick something easy!
-  Link to docs.github.com for further explanations.
-  Encourage users to open new tabs for steps!
--->
+```bash
+# Install dependencies
+npm install
 
-## Step 1: Enable GitHub Pages
+# Start the server
+npm run server
+```
 
-_Welcome to GitHub Pages and Jekyll :tada:!_
+## API Endpoints
 
-The first step is to enable GitHub Pages on this [repository](https://docs.github.com/en/get-started/quickstart/github-glossary#repository). When you enable GitHub Pages on a repository, GitHub takes the content that's on the main branch and publishes a website based on its contents.
+- `POST /api/builds/upload` - Upload a ZIP file
+- `GET /api/builds/:buildId/status` - Get build status
+- `GET /api/builds/:buildId` - Get build details
+- `GET /api/builds` - List all builds
+- `GET /api/builds/:buildId/download` - Download the APK file
 
-### :keyboard: Activity: Enable GitHub Pages
+## Actual APK Building
 
-1. Open a new browser tab, and work on the steps in your second tab while you read the instructions in this tab.
-1. Under your repository name, click **Settings**.
-1. Click **Pages** in the **Code and automation** section.
-1. Ensure "Deploy from a branch" is selected from the **Source** drop-down menu, and then select `main` from the **Branch** drop-down menu.
-1. Click the **Save** button.
-1. Wait about _one minute_ then refresh this page (the one you're following instructions from). [GitHub Actions](https://docs.github.com/en/actions) will automatically update to the next step.
-   > Turning on GitHub Pages creates a deployment of your repository. GitHub Actions may take up to a minute to respond while waiting for the deployment. Future steps will be about 20 seconds; this step is slower.
-   > **Note**: In the **Pages** of **Settings**, the **Visit site** button will appear at the top. Click the button to see your GitHub Pages site.
+In a production environment, you would need to:
 
-<footer>
+1. Install the Android SDK
+2. Install Capacitor and its dependencies
+3. Configure your server with the necessary tools
 
-<!--
-  <<< Author notes: Footer >>>
-  Add a link to get support, GitHub status page, code of conduct, license link.
--->
+For the full implementation:
 
----
+1. Extract the uploaded ZIP file
+2. Validate that it contains an index.html and other game files
+3. Create a new Capacitor project
+4. Configure the Capacitor project with appropriate app details
+5. Copy the game files to the web directory
+6. Add the Android platform
+7. Build the APK
+8. Save the APK for download
 
-Get help: [Post in our discussion board](https://github.com/orgs/skills/discussions/categories/github-pages) &bull; [Review the GitHub status page](https://www.githubstatus.com/)
+## Deployment Instructions
 
-&copy; 2023 GitHub &bull; [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md) &bull; [MIT License](https://gh.io/mit)
+### Server Requirements
 
-</footer>
+- Node.js v18+
+- Android SDK (for building APKs)
+- JDK 11+ (required for Android SDK)
+- Gradle 7+ (for Android builds)
+- At least 4GB RAM
+- 20GB+ of storage space
+
+### Setting Up the Build Server
+
+1. Install Node.js and npm
+2. Install Android Studio or Android SDK Tools
+3. Set up ANDROID_HOME and JAVA_HOME environment variables
+4. Clone the repository
+5. Install dependencies with `npm install`
+6. Start the server with `npm run server`
+
+### Connect Frontend to Backend
+
+Make sure your frontend's `apiService.ts` points to the correct backend URL.
