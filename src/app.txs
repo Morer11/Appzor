@@ -1,0 +1,29 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import UploadPage from './pages/UploadPage';
+import BuildStatus from './pages/BuildStatus';
+import Downloads from './pages/Downloads';
+import Header from './components/Header';
+import Footer from './components/Footer';
+
+function App() {
+  return (
+    <Router>
+      <div className="flex flex-col min-h-screen bg-gray-50">
+        <Header />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/upload" element={<UploadPage />} />
+            <Route path="/build/:buildId" element={<BuildStatus />} />
+            <Route path="/downloads/:buildId?" element={<Downloads />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
+  );
+}
+
+export default App;
